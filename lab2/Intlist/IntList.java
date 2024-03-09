@@ -98,14 +98,13 @@ public class IntList {
         //TODO:  fill in method
         IntList L = new IntList(A.first, null);
         IntList L1 = A;
-        L1 = L1.rest;
         IntList ptr = L;
-        while(L1 != null){
-            ptr.rest = new IntList(L1.first, null);
+        while(L1.rest != null){
+            ptr.rest = L1.rest;
             L1 = L1.rest;
             ptr = ptr.rest;
         }
-        ptr = B;
+        ptr.rest = B;
         return L;
     }
 

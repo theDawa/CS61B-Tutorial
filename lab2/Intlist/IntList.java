@@ -99,8 +99,9 @@ public class IntList {
         IntList L = new IntList(A.first, null);
         IntList L1 = A;
         IntList ptr = L;
-        while(L1.rest != null){
-            ptr.rest = L1.rest;
+        L1 = L1.rest;
+        while(L1 != null){
+            ptr.rest = new IntList(L1.first, null);;
             L1 = L1.rest;
             ptr = ptr.rest;
         }

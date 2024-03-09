@@ -87,7 +87,7 @@ public class IntList {
             L = L.rest;
         }
         L.rest = B;
-        return null;
+        return A;
     }
 
     /**

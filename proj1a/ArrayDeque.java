@@ -16,7 +16,7 @@ public class ArrayDeque<Item> {
     /** Resizes the underlying array to the target capacity. */
     private void resize(int capacity) {
         Item[] a = (Item[]) new Object[capacity];
-        System.arraycopy(items, front + 1, a, 0, size);
+        System.arraycopy(items, front, a, front + capacity / 2, size);
         items = a;
         front = front + capacity / 2;
         rear = rear + capacity / 2;
@@ -27,8 +27,12 @@ public class ArrayDeque<Item> {
         if (front == 0) {
             resize(size + 8);
         }
-        items[front] = x;
+        if (size == 0){
+            items[front] = x;
+            return;
+        }
         front = (front - 1);
+        items[front] = x;
         size = size + 1;
     }
     /** Inserts X into the back of the list. */
@@ -36,15 +40,18 @@ public class ArrayDeque<Item> {
         if (rear == (this.capacity - 1)) {
             resize(this.capacity + 8);
         }
-
-        items[rear] = x;
+        if (size == 0){
+            items[rear] = x;
+            return;
+        }
         rear = rear + 1;
+        items[rear] = x;
         size = size + 1;
     }
 
     /** Returns true if the deque is empty, false otherwise. */
     public boolean isEmpty(){
-        if(front == rear ){
+        if((items[front] == null) ){
             return true;
         }
         return false;

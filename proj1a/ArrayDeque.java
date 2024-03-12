@@ -37,14 +37,14 @@ public class ArrayDeque<Item> {
             resize(this.capacity + 8);
         }
 
-        items[rear + 1] = x;
+        items[rear] = x;
         rear = rear + 1;
         size = size + 1;
     }
 
     /** Returns true if the deque is empty, false otherwise. */
     public boolean isEmpty(){
-        if(front == rear){
+        if(front == rear ){
             return true;
         }
         return false;
@@ -64,7 +64,7 @@ public class ArrayDeque<Item> {
         if(isEmpty()){
             return null;
         }
-        return items[front + 1 + i];
+        return items[front + i];
     }
 
     /** Returns the number of items in the list. */
@@ -80,8 +80,8 @@ public class ArrayDeque<Item> {
         if(isEmpty()){
             return null;
         }
-        Item x = items[front + 1];
-        items[front + 1] = null;
+        Item x = items[front];
+        items[front] = null;
         front = front + 1;
         size = size - 1;
         return x;

@@ -28,8 +28,8 @@ public class ArrayDeque<Item> {
             resize(size + 8);
         }
         items[front] = x;
-        front = (front - 1) % this.capacity;
-        rear = (rear + 1) % this.capacity;
+        front = (front - 1);
+        size = size + 1;
     }
     /** Inserts X into the back of the list. */
     public void addLast(Item x) {
@@ -58,10 +58,7 @@ public class ArrayDeque<Item> {
         }
     }
 
-    /** Returns the item from the back of the list. */
-    public Item getLast() {
-        return items[rear];
-    }
+
     /** Gets the ith item in the list (0 is the front). */
     public Item get(int i) {
         if(isEmpty()){
@@ -72,6 +69,9 @@ public class ArrayDeque<Item> {
 
     /** Returns the number of items in the list. */
     public int size() {
+        if(isEmpty()){
+            return 0;
+        }
         return size;
     }
 
@@ -89,6 +89,9 @@ public class ArrayDeque<Item> {
     /** Deletes item from back of the list and
      * returns deleted item. */
     public Item removeLast() {
+        if(isEmpty()){
+            return null;
+        }
         Item x = items[rear];
         items[rear] = null;
         rear = rear - 1;

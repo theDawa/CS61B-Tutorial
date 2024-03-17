@@ -88,6 +88,10 @@ public class ArrayDeque<Item> {
             return null;
         }
         Item x = items[front];
+        if(size == 1){
+            items[front] = null;
+            return x;
+        }
         items[front] = null;
         front = front + 1;
         size = size - 1;
@@ -100,6 +104,10 @@ public class ArrayDeque<Item> {
             return null;
         }
         Item x = items[rear];
+        if(size == 1){
+            items[rear] = null;
+            return x;
+        }
         items[rear] = null;
         rear = rear - 1;
         size = size - 1;

@@ -3,6 +3,21 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 public class IntListTest {
+    /**
+     * Returns the reverse of the given IntList.
+     * This method is destructive. If given null
+     * as an input, returns null.
+     */
+    public static void Testreverse(){
+        IntList one = new IntList(1, null);
+        IntList twoOne = new IntList(2, one);
+        IntList threeTwoOne = new IntList(3, twoOne);
+        IntList B = null;
+        IntList exp = IntList.of(1, 2, 3);
+        assertEquals(IntList.reverse(exp), threeTwoOne);
+        assertNotEquals(IntList.reverse(threeTwoOne), threeTwoOne);
+        assertEquals(IntList.reverse(B), null);
+    }
 
     /**
      * Example test that verifies correctness of the IntList.of static
@@ -69,5 +84,8 @@ public class IntListTest {
     /** If you're running this from the command line, you'll need
       * to add a main method. See ArithmeticTest.java for an
       * example. */
+    public static void main(String[] args){
+        Testreverse();
+    }
 
 }

@@ -11,6 +11,9 @@ public class Palindrome {
     }
 
     public boolean isPalindrome(String word){
+        if((word.length() == 1) || (word.isEmpty())){
+            return true;
+        }
         Character[] a = new Character[word.length()];
         Character[] b = new Character[word.length()];
         for(int i = 0; i < word.length(); i = i + 1){
@@ -28,7 +31,10 @@ public class Palindrome {
     }
 
     public boolean isPalindrome(String word, CharacterComparator cc){
-        for(int i = 0; i < word.length(); i = i + 1){
+        if((word.length() == 1) || (word.isEmpty())){
+            return true;
+        }
+        for(int i = 0; i < (word.length()/2); i = i + 1){
             if(!(cc.equalChars(word.charAt(i), word.charAt(word.length() - i - 1)))){
                 return false;
             }

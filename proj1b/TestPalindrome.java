@@ -26,7 +26,7 @@ public class TestPalindrome {
     @Test
     public void testisPalindrome_new(){
         CharacterComparator offByOne = new OffByOne();
-        assertTrue(palindrome.isPalindrome("racecar", offByOne));
+        assertTrue(palindrome.isPalindrome("flake", offByOne));
         assertFalse(palindrome.isPalindrome("cat", offByOne));
 
     }

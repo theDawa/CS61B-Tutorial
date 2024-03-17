@@ -10,12 +10,9 @@ public class TestOffByOne {
     static CharacterComparator offByOne = new OffByOne();
     @Test
     public void equalChars(){
-        char ch = 'a';
-        char bh = 'b';
-        char ah = 'a';
 
-        assertTrue(offByOne.equalChars(ah, ch));
-        assertFalse(offByOne.equalChars(bh, ah));
+        assertTrue(offByOne.equalChars('a', 'b'));
+        assertFalse(offByOne.equalChars('a', 'c'));
 
     }
 

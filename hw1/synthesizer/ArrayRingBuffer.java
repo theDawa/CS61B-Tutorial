@@ -1,10 +1,10 @@
-// TODO: Make sure to make this class a part of the synthesizer package
+package synthesizer;// TODO: Make sure to make this class a part of the synthesizer package
 // package <package name>;
 import java.util.Iterator;
 
 //TODO: Make sure to make this class and all of its methods public
 //TODO: Make sure to make this class extend AbstractBoundedQueue<t>
-public class ArrayRingBuffer<T>  {
+public class ArrayRingBuffer<T> extends AbstractBoundedQueue<T> {
     /* Index for the next dequeue or peek. */
     private int first;            // index for the next dequeue or peek
     /* Index for the next enqueue. */
@@ -21,6 +21,11 @@ public class ArrayRingBuffer<T>  {
         //       this.capacity should be set appropriately. Note that the local variable
         //       here shadows the field we inherit from AbstractBoundedQueue, so
         //       you'll need to use this.capacity to set the capacity.
+        first = 0;
+        last = 0;
+        fillCount = 0;
+        this.capacity = capacity;
+        rb = (T[]) new Object[capacity];;
     }
 
     /**
@@ -30,6 +35,17 @@ public class ArrayRingBuffer<T>  {
      */
     public void enqueue(T x) {
         // TODO: Enqueue the item. Don't forget to increase fillCount and update last.
+        fillCount = fillCount + 1;
+        if(fillCount > this.capacity){
+            throw new RuntimeException("Ring buffer overflow");
+        }
+        rb[last] = x;
+        last += 1;
+        if(last == this.capacity){
+            last = 0;
+        }
+
+
     }
 
     /**
@@ -38,7 +54,18 @@ public class ArrayRingBuffer<T>  {
      * covered Monday.
      */
     public T dequeue() {
-        // TODO: Dequeue the first item. Don't forget to decrease fillCount and update 
+        // TODO: Dequeue the first item. Don't forget to decrease fillCount and update
+        fillCount = fillCount - 1;
+        if(fillCount <= 0){
+            throw new RuntimeException("Ring buffer overflow");
+        }
+        T a = rb[first];
+        rb[first] = null;
+        first += 1;
+        if(first == this.capacity){
+            first = 0;
+        }
+        return a;
     }
 
     /**
@@ -46,7 +73,30 @@ public class ArrayRingBuffer<T>  {
      */
     public T peek() {
         // TODO: Return the first item. None of your instance variables should change.
+        return rb[first];
     }
 
+
+
+
+
+
     // TODO: When you get to part 5, implement the needed code to support iteration.
+     private class KeyIterator<T> implements Iterator<T> {
+        private int ptr;
+        public KeyIterator() { ptr = 0; }
+        @Override
+        public boolean hasNext() { return (ptr != capacity); }
+        @Override
+        public T next() {
+            ptr = ptr + 1;
+            return (T) rb[ptr - 1];
+        }
+
+    }
+
+    public Iterator<T> iterator(){
+        return new KeyIterator<>();
+    }
 }
+

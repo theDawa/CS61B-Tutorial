@@ -44,8 +44,32 @@ public class RandomWorldDemo {
         }
     }
 
+    public void addHexagon(int x){
+
+        for(int i = 0; i < x; i = i + 1){
+            for(int k = i; k < x - 1; k = k + 1){
+                System.out.print(' ');
+            }
+            for (int j = 0; j < (i * 2 + x); j = j + 1){
+                System.out.print('a');
+            }
+            System.out.println();
+        }
+        for(int i = x - 1; i >= 0; i = i - 1){
+            for(int k = i; k < x - 1; k = k + 1){
+                System.out.print(' ');
+            }
+            for (int j = 0; j < (i * 2 + x); j = j + 1){
+                System.out.print('a');
+            }
+            System.out.println();
+        }
+
+    }
     public static void main(String[] args) {
         TERenderer ter = new TERenderer();
+        RandomWorldDemo a = new RandomWorldDemo();
+        a.addHexagon(4);
         ter.initialize(WIDTH, HEIGHT);
 
         TETile[][] randomTiles = new TETile[WIDTH][HEIGHT];

@@ -6,6 +6,7 @@ import edu.princeton.cs.algs4.WeightedQuickUnionUF;
 
 public class Percolation {
     private WeightedQuickUnionUF model;
+    private WeightedQuickUnionUF model1;
     private boolean[][] twoD_arr;
     private int N;
     private int sites;
@@ -19,12 +20,14 @@ public class Percolation {
         }
         this.N = N;
         twoD_arr = new boolean[N][N];
-        model = new WeightedQuickUnionUF(N * N + 2);
+        model = new WeightedQuickUnionUF(N*N + 2);
+        model1 = new WeightedQuickUnionUF(N*N + 2);
         this.sites = 0;
 
         //union the top N elements with the N+1 th element, union the bottom N elements with the N+2 the elements
         for(int i = 0; i < N; i++){
             model.union(i, N*N);
+            model1.union(i, N*N);
             model.union(N*(N-1)+i, N*N+1);
         }
 
@@ -39,15 +42,18 @@ public class Percolation {
         }
         twoD_arr[row][col] = true;
         sites = sites + 1;
+
         if((row !=0 ) & (row != N-1) & (col != 0) & (col != N-1) ){
             for(int i = col-1; i < col+2; i++){
                 if(isOpen(row, i)){
                     model.union(row*N+i, row*N+col);
+                    model1.union(row*N+i, row*N+col);
                 }
             }
             for(int i = row -1; i < row+2; i++){
                 if(isOpen(i, col)){
                     model.union(i*N+col, row*N+col);
+                    model1.union(i*N+col, row*N+col);
                 }
             }
         }
@@ -55,83 +61,104 @@ public class Percolation {
             for(int i = row -1; i < row+2; i++){
                 if(isOpen(i, col)){
                     model.union(i*N+col, row*N+col);
+                    model1.union(i*N+col, row*N+col);
                 }
             }
             if(isOpen(row, col+1)){
                 model.union(row*N+col+1, row*N+col);
+                model1.union(row*N+col+1, row*N+col);
             }
         }
         if ((col == N-1) & (row != N-1) & (row != 0)){
             for(int i = row -1; i < row+2; i++){
                 if(isOpen(i, col)){
                     model.union(i*N+col, row*N+col);
+                    model1.union(i*N+col, row*N+col);
                 }
             }
             if(isOpen(row, col-1)){
                 model.union(row*N+col-1, row*N+col);
+                model1.union(row*N+col-1, row*N+col);
             }
         }
 
 
         if ((row == N-1) & (col != N-1) & (col != 0)){
             for(int i = col -1; i < col+2; i++){
-                if(isOpen(row, i)){
-                    model.union(i*N+row, row*N+col);
-                }
+                    if(isOpen(row, i)){
+                        model.union(i+row*N, row*N+col);
+                        model1.union(i+row*N, row*N+col);
+                    }
+
             }
             if(isOpen(row-1, col)){
                 model.union((row-1)*N+col, row*N+col);
+                model1.union((row-1)*N+col, row*N+col);
             }
         }
 
         if ((row == N-1) & (col == 0)){
             if(isOpen(row-1, col)){
-                model.union((row-1)*N+col, row*N+col);
+                model.union(row*N+col,(row-1)*N+col );
+                model1.union(row*N+col,(row-1)*N+col );
             }
+
             if(isOpen(row, col+1)){
                 model.union((row)*N+col+1, row*N+col);
+                model1.union((row)*N+col+1, row*N+col);
             }
+
         }
 
         if ((row == N-1) & (col == N-1)){
             if(isOpen(row-1, col)){
                 model.union((row-1)*N+col, row*N+col);
+                model1.union((row-1)*N+col, row*N+col);
             }
+
             if(isOpen(row, col-1)){
                 model.union((row)*N+col-1, row*N+col);
+                model1.union((row)*N+col-1, row*N+col);
             }
+
         }
 
         if ((row == 0) & (col != N-1) & (col != 0)){
             for(int i = col-1; i < col+2; i++){
                 if(isOpen(row, i)){
                     model.union(i, col);
+                    model1.union(i, col);
                 }
             }
             if(isOpen(row+1, col)){
                 model.union(col, N + col);
+                model1.union(col, N + col);
             }
         }
 
         if ((row == 0) & (col == N-1)){
             if(isOpen(row, col-1)){
                 model.union(col-1, col);
+                model1.union(col-1, col);
             }
 
 
             if(isOpen(row+1, col)){
                 model.union(col, N + col);
+                model1.union(col, N + col);
             }
         }
 
         if ((row == 0) & (col == 0)){
             if(isOpen(row, col+1)){
                 model.union(0, 1);
+                model1.union(0, 1);
             }
 
 
             if(isOpen(row+1, col)){
                 model.union(0, N );
+                model1.union(0, N );
             }
         }
 
@@ -152,6 +179,12 @@ public class Percolation {
 
         }
         if(!isOpen(row, col)){
+            return false;
+        }
+        if(model.connected(N*N, N*N+1)){
+            if (model1.connected(N*N, row*N + col)){
+                return true;
+            }
             return false;
         }
         return model.connected(N*N, row*N+col);

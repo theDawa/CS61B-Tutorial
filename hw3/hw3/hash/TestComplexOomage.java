@@ -6,7 +6,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class TestComplexOomage {
 
@@ -43,13 +45,13 @@ public class TestComplexOomage {
         List<Oomage> deadlyList = new ArrayList<>();
 
         // Your code here.
-        int N = 1000;
+        int N = 10000;
         for (int i = 0; i < N; i += 1) {
-            ArrayList<Integer> params = new ArrayList<>(10);
-            for (int k = 0; k < 4; k += 1) {
-                params.add(StdRandom.uniform(1, 10));
+            List<Integer> params = new ArrayList<>(10);
+            for (int k = 0; k <= 5; k += 1) {
+                params.add(StdRandom.uniform(0,255 ));
             }
-            for (int k = 4; k < 10; k += 1) {
+            for (int k = 6; k < 10; k += 1) {
                 params.add(1);
             }
             ComplexOomage a = new ComplexOomage(params);

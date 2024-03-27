@@ -43,17 +43,19 @@ public class TestComplexOomage {
         List<Oomage> deadlyList = new ArrayList<>();
 
         // Your code here.
-        int N = 10;
+        int N = 1000;
         for (int i = 0; i < N; i += 1) {
-            int J = StdRandom.uniform(10, 20);
-            ArrayList<Integer> params = new ArrayList<>(N);
-            for (int k = 0; k < J; k += 1) {
+            ArrayList<Integer> params = new ArrayList<>(10);
+            for (int k = 0; k < 4; k += 1) {
+                params.add(StdRandom.uniform(1, 10));
+            }
+            for (int k = 4; k < 10; k += 1) {
                 params.add(1);
             }
             ComplexOomage a = new ComplexOomage(params);
             deadlyList.add(a);
         }
-        assertTrue(OomageTestUtility.haveNiceHashCodeSpread(deadlyList, 5));
+        assertTrue(OomageTestUtility.haveNiceHashCodeSpread(deadlyList, 10));
     }
 
     /** Calls tests for SimpleOomage. */
